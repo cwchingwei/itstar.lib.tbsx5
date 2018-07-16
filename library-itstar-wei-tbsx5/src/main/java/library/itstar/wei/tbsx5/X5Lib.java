@@ -191,6 +191,7 @@ public class X5Lib
         X5WebView webView = new X5WebView( context );
         if( webView.getX5WebViewExtension() == null )
         {
+            LogUtil.logInfo( LogUtil.TAG, "X5 Web View init Fail" );
             AppConfig.setBuglyRun( true );
         }
     }
