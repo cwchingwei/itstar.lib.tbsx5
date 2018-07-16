@@ -154,26 +154,34 @@ public class X5ViewActivity extends AppCompatActivity
         }
         else
         {
-            final Handler checkBuglyHandler = new Handler();
-            checkBuglyHandler.postDelayed( new Runnable()
+            SystemConfig.getNowActivity().runOnUiThread( new Runnable()
             {
                 @Override
                 public void run ()
                 {
-                    if ( webView.getX5WebViewExtension() == null )
-                    {
-                        SystemConfig.getNowActivity().runOnUiThread( new Runnable()
-                        {
-                            @Override
-                            public void run ()
-                            {
-                                mTextLunch.setText( getString( R.string.launch_browser_x5_text ) );
-                            }
-                        });
-                        checkBuglyHandler.postDelayed( this, 1000 );
-                    }
+                    mTextLunch.setText( getString( R.string.launch_init_error_text ) );
                 }
-            }, 100 );
+            });
+//            final Handler checkBuglyHandler = new Handler();
+//            checkBuglyHandler.postDelayed( new Runnable()
+//            {
+//                @Override
+//                public void run ()
+//                {
+//                    if ( webView.getX5WebViewExtension() == null )
+//                    {
+//                        SystemConfig.getNowActivity().runOnUiThread( new Runnable()
+//                        {
+//                            @Override
+//                            public void run ()
+//                            {
+//                                mTextLunch.setText( getString( R.string.launch_init_error_text ) );
+//                            }
+//                        });
+//                        checkBuglyHandler.postDelayed( this, 1000 );
+//                    }
+//                }
+//            }, 100 );
         }
     }
 

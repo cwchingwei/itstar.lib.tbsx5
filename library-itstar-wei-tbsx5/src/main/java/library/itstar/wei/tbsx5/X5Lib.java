@@ -223,21 +223,11 @@ public class X5Lib
                 }
             } );
         }
-
-        X5WebView webView = new X5WebView( mActivity );
-        if( webView.getX5WebViewExtension() == null )
-        {
-            LogUtil.logInfo( LogUtil.TAG, "X5 Web View init Fail" );
-            AppConfig.setBuglyRun( true );
-        }
-        else
-        {
-            LogUtil.logInfo( LogUtil.TAG, "X5 Web View init Success" );
-            AppConfig.setBuglyRun( false );
-        }
+        checkTbsX5();
     }
     public static void start ()
     {
+        checkTbsX5();
         construct( mActivity );
     }
 
@@ -565,6 +555,22 @@ public class X5Lib
                 }
             }
         } ).start();
+    }
+
+    private static void checkTbsX5()
+    {
+        X5WebView webView = new X5WebView( mActivity );
+        if( webView.getX5WebViewExtension() == null )
+        {
+            LogUtil.logInfo( LogUtil.TAG, "X5 Web View init Fail" );
+            AppConfig.setBuglyRun( true );
+        }
+        else
+        {
+            LogUtil.logInfo( LogUtil.TAG, "X5 Web View init Success" );
+            AppConfig.setBuglyRun( false );
+        }
+        webView.destroy();
     }
 
     public static void releaseView ()
