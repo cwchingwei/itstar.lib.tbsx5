@@ -24,6 +24,18 @@ public class AppConfig
 
     private static boolean buglyRun = false;
 
+    public static boolean isTbsX5Run ()
+    {
+        return tbsX5Run;
+    }
+
+    public static void setTbsX5Run ( boolean tbsX5Run )
+    {
+        AppConfig.tbsX5Run = tbsX5Run;
+    }
+
+    private static boolean tbsX5Run = false;
+
     public static int getViewLunch ()
     {
         return viewLunch;

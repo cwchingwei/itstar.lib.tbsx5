@@ -56,7 +56,6 @@ public class X5Lib
     private static Activity           mActivity           = null;
     private static SpinKitView        mSpinKitView        = null;
     private static PingFinishListener mPingFinishListener = null;
-
     private static boolean            mStopHandler    = false;
     private static android.os.Handler mHandler        = new android.os.Handler();
     private static int mCount = 0;
@@ -168,7 +167,7 @@ public class X5Lib
                         } );
                     }
                 } );
-                AppConfig.setBuglyRun( false );
+                AppConfig.setTbsX5Run( false );
             }
 
             @Override
@@ -184,7 +183,7 @@ public class X5Lib
                     }
                 } );
 
-                AppConfig.setBuglyRun( true );
+                AppConfig.setTbsX5Run( true );
             }
         });
     }
@@ -508,7 +507,7 @@ public class X5Lib
                                             @Override
                                             public void run ()
                                             {
-                                                if ( !AppConfig.isBuglyRun() )
+                                                if ( !AppConfig.isTbsX5Run() )
                                                 {
                                                     mActivity.runOnUiThread( new Runnable()
                                                     {
@@ -563,12 +562,12 @@ public class X5Lib
         if( webView.getX5WebViewExtension() == null )
         {
             LogUtil.logInfo( LogUtil.TAG, "X5 Web View init Fail" );
-            AppConfig.setBuglyRun( true );
+            AppConfig.setTbsX5Run( true );
         }
         else
         {
             LogUtil.logInfo( LogUtil.TAG, "X5 Web View init Success" );
-            AppConfig.setBuglyRun( false );
+            AppConfig.setTbsX5Run( false );
         }
         webView.destroy();
     }
@@ -582,7 +581,7 @@ public class X5Lib
 
     public static void release()
     {
-        AppConfig.setBuglyRun( false );
+        AppConfig.setTbsX5Run( false );
         if( mHandler != null ) mHandler.removeCallbacks( runnable );
         mHandler = null;
         runnable = null;

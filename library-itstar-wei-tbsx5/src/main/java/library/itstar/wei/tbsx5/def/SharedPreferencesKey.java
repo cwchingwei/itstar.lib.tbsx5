@@ -14,4 +14,5 @@ public class SharedPreferencesKey
     public final static String SHARED_PRERENCES_WEBVIEW_LOGIN_COOKIES    = "share_pre_key_login_cookies";
     public final static String SHARED_PRERENCES_WEBVIEW_LANGUAGE_COOKIES = "share_pre_key_language_cookies";
     public final static String SHARED_PRERENCES_WEBVIEW_ACCOUNT_COOKIES  = "share_pre_key_account_cookies";
+    public final static String SHARED_PRERENCES_X5_USER_AGENT  = "share_pre_key_x5_user_agent";
 }

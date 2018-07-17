@@ -80,7 +80,6 @@ public class X5ViewActivity extends AppCompatActivity
 
     private float startX = 0;
     private float startY = 0;
-
     int mMotionDownX, mMotionDownY;
 
     private static boolean            mStopHandler = false;
@@ -147,7 +146,6 @@ public class X5ViewActivity extends AppCompatActivity
         initListener();
         initData();
 
-        Log.i("QbSdk", " getX5WebViewExtension is " + webView.getX5WebViewExtension());
         if( webView.getX5WebViewExtension() != null )
         {
             webView.loadUrl( _url, null );
@@ -327,6 +325,8 @@ public class X5ViewActivity extends AppCompatActivity
 //            webView.getSettings().setSupportMultipleWindows( false );
 //            webView.getSettings().setJavaScriptCanOpenWindowsAutomatically( false );
         }
+        webView.getSettings().setUserAgentString( webView.getSettings().getUserAgentString() + " App:" + AppConfig.getAppVersion() );
+        SystemConfig.instance().putSharedPreString( SharedPreferencesKey.SHARED_PRERENCES_X5_USER_AGENT, webView.getSettings().getUserAgentString() );
     }
 
     private void initListener ()
