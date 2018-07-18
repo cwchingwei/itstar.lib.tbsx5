@@ -3,6 +3,7 @@ package library.itstar.wei.tbsx5.view.act;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
 import android.net.Uri;
@@ -23,6 +24,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.tencent.smtt.export.external.interfaces.IX5WebChromeClient;
 import com.tencent.smtt.export.external.interfaces.SslErrorHandler;
 import com.tencent.smtt.sdk.CookieManager;
 import com.tencent.smtt.sdk.WebChromeClient;
@@ -56,15 +58,17 @@ import library.itstar.wei.tbsx5.view.x5.X5WebView;
 
 public class X5ViewActivity extends AppCompatActivity
 {
-    private       X5WebView            webView                         = null;
-    private       ProgressBar          mProgressBar                    = null;
-    private       ImageView            mClose                          = null;
-    private       RelativeLayout       mViewLunch                      = null;
-    private       TextView             mTextLunch                      = null;
-    private       boolean              isFirst                         = true;
-    private       String               _url                            = null;
-    private       Thread               _thread_timeout                 = null;
-    private       boolean              timeout                         = true;
+    private X5WebView      webView         = null;
+    private ProgressBar    mProgressBar    = null;
+    private ImageView      mClose          = null;
+//    private Button         mMenu           = null;
+    private RelativeLayout mViewLunch      = null;
+//    private RelativeLayout mToolbarRoot    = null;
+    private TextView       mTextLunch      = null;
+    private boolean        isFirst         = true;
+    private String         _url            = null;
+    private Thread         _thread_timeout = null;
+    private boolean        timeout         = true;
     private       boolean              webViewReady                    = false;
     private       ArrayList< String >  historyOverrideURL              = null;
     private       String               TAG                             = X5ViewActivity.class.getName();
@@ -137,9 +141,11 @@ public class X5ViewActivity extends AppCompatActivity
 
         webView = ( X5WebView ) findViewById( R.id.web_view );
         mProgressBar = ( ProgressBar ) findViewById( R.id.progress_bar );
+//        mToolbarRoot = ( RelativeLayout ) findViewById( R.id.toolbar_root );
         mClose = ( ImageView ) findViewById( R.id.web_close );
         mTextLunch = ( TextView ) findViewById( R.id.txt_view_lunch );
         mViewLunch = ( RelativeLayout ) findViewById( R.id.img_view_lunch );
+//        mMenu = ( Button ) findViewById( R.id.web_menu );
 
         initLunchView();
 
@@ -180,6 +186,27 @@ public class X5ViewActivity extends AppCompatActivity
 //                    }
 //                }
 //            }, 100 );
+        }
+    }
+
+    @Override
+    public void onConfigurationChanged ( Configuration newConfig )
+    {
+        try
+        {
+            super.onConfigurationChanged( newConfig );
+            if ( getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE )
+            {
+
+            }
+            else if ( getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT )
+            {
+
+            }
+        }
+        catch ( Exception e )
+        {
+            e.printStackTrace();
         }
     }
 
@@ -331,6 +358,40 @@ public class X5ViewActivity extends AppCompatActivity
 
     private void initListener ()
     {
+//        mMenu.setOnClickListener( new View.OnClickListener()
+//        {
+//            @Override
+//            public void onClick ( View view )
+//            {
+//                PopupMenu    popup    = new PopupMenu( X5ViewActivity.this, view );
+//                MenuInflater inflater = popup.getMenuInflater();
+//                inflater.inflate(R.menu.menu, popup.getMenu());
+//                popup.setOnMenuItemClickListener( new PopupMenu.OnMenuItemClickListener()
+//                {
+//                    @Override
+//                    public boolean onMenuItemClick ( MenuItem item )
+//                    {
+//                        int id = item.getItemId();
+//                        if( id == R.id.menu_open_browser )
+//                        {
+//                            Intent intent = new Intent( Intent.ACTION_VIEW, Uri.parse( _url ) );
+//                            X5ViewActivity.this.startActivity( intent );
+//                            return true;
+//                        }
+//                        else if( id == R.id.menu_about )
+//                        {
+//                            return true;
+//                        }
+//                        else
+//                        {
+//                            return false;
+//                        }
+//                    }
+//                } );
+//                popup.show();
+//            }
+//        } );
+
         mClose.setOnClickListener( new View.OnClickListener()
         {
             @Override
@@ -489,6 +550,41 @@ public class X5ViewActivity extends AppCompatActivity
                 i.addCategory( Intent.CATEGORY_OPENABLE );
                 i.setType( "image/*" );
                 startActivityForResult( Intent.createChooser( i, "Image Chooser" ), 100 );
+            }
+
+            View myVideoView;
+            View myNormalView;
+            IX5WebChromeClient.CustomViewCallback callback;
+
+            // /////////////////////////////////////////////////////////
+            //
+            /**
+             * 全屏播放配置
+             */
+            @Override
+            public void onShowCustomView(View view, IX5WebChromeClient.CustomViewCallback customViewCallback) {
+                LogRun.append( "onShowCustomView" );
+                RelativeLayout normalView = (RelativeLayout) findViewById(R.id.root_web_view);
+                ViewGroup   viewGroup  = (ViewGroup) normalView.getParent();
+                viewGroup.removeView(normalView);
+                viewGroup.addView(view);
+                myVideoView = view;
+                myNormalView = normalView;
+                callback = customViewCallback;
+            }
+
+            @Override
+            public void onHideCustomView() {
+                LogRun.append( "onHideCustomView" );
+                if (callback != null) {
+                    callback.onCustomViewHidden();
+                    callback = null;
+                }
+                if (myVideoView != null) {
+                    ViewGroup viewGroup = (ViewGroup) myVideoView.getParent();
+                    viewGroup.removeView(myVideoView);
+                    viewGroup.addView(myNormalView);
+                }
             }
         });
 

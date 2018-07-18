@@ -38,4 +38,7 @@
     <string name="error_msg_timeout_server">SERVER CONNECT TIME OUT</string>
     <string name="error_msg_host_lookup">ERROR HOST LOOKUP</string>
     <string name="error_msg_connect">ERROR CONNECT</string>
+
+    <string name="menu_open_browser">在浏览器开启</string>
+    <string name="menu_about">关于</string>
 </resources>

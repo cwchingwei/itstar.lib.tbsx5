@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="20dp"
+    android:background="@android:color/black">
+
+    <Button
+        android:id="@+id/web_menu"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:background="@drawable/ic_menu"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="0dp"
+        android:layout_alignParentEnd="true"/>
+
+    <ImageView
+        android:id="@+id/web_close"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="0dp"
+        android:visibility="gone"
+        android:src="@android:drawable/ic_menu_close_clear_cancel"/>
+
+</RelativeLayout>
