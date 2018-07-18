@@ -31,6 +31,7 @@ import library.itstar.wei.tbsx5.local.AppConfig;
 import library.itstar.wei.tbsx5.local.AyncUpdateListener;
 import library.itstar.wei.tbsx5.local.CallBackListener;
 import library.itstar.wei.tbsx5.local.SystemConfig;
+import library.itstar.wei.tbsx5.local.ViewConfig;
 import library.itstar.wei.tbsx5.local.log.LogRun;
 import library.itstar.wei.tbsx5.model.CheckLinkModel;
 import library.itstar.wei.tbsx5.model.ConfigAsyncTimeoutTask;
@@ -44,6 +45,7 @@ import library.itstar.wei.tbsx5.utils.NetWorkUtil;
 import library.itstar.wei.tbsx5.utils.StringUtils;
 import library.itstar.wei.tbsx5.view.SpinKit.SpinKitView;
 import library.itstar.wei.tbsx5.view.act.X5ViewActivity;
+import library.itstar.wei.tbsx5.view.act.X5ViewToolbarActivity;
 import library.itstar.wei.tbsx5.view.x5.X5WebView;
 
 /**
@@ -188,6 +190,10 @@ public class X5Lib
         });
     }
 
+    public static void setStyleToolbar( int styleToolbar )
+    {
+        ViewConfig.setViewStyle( styleToolbar );
+    }
     public static void init ( final Activity activity, String appVersion, String appApp, String isDev )
     {
         LogUtil.logInfo( LogUtil.TAG, "X5Lib init" );
@@ -530,7 +536,15 @@ public class X5Lib
                                                         }
                                                     });
 
-                                                    Intent intent = new Intent( activity, X5ViewActivity.class );
+                                                    Intent intent = null;
+                                                    if( ViewConfig.getViewStyle() == 1 )
+                                                    {
+                                                        intent = new Intent( activity, X5ViewToolbarActivity.class );
+                                                    }
+                                                    else
+                                                    {
+                                                        intent = new Intent( activity, X5ViewActivity.class );
+                                                    }
                                                     activity.startActivity( intent );
                                                 }
                                                 else

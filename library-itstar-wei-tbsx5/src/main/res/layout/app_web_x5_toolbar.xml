@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/root_web_view">
+
+    <RelativeLayout
+        android:id="@+id/img_view_lunch"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/txt_view_lunch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"
+            android:textColor="@android:color/white"/>
+
+    </RelativeLayout>
+
+    <include
+        android:id="@+id/toolbar_root"
+        layout="@layout/layout_toolbar"/>
+
+    <library.itstar.wei.tbsx5.view.x5.X5WebView
+        android:id="@+id/web_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar_root"
+        android:visibility="visible">
+    </library.itstar.wei.tbsx5.view.x5.X5WebView>
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_below="@id/toolbar_root"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:max="100"/>
+
+    <!--<ImageView-->
+        <!--android:id="@+id/web_close"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="5dp"-->
+        <!--android:background="@drawable/img_bg_close"-->
+        <!--android:src="@android:drawable/ic_menu_close_clear_cancel"-->
+        <!--android:visibility="gone"/>-->
+
+</RelativeLayout>

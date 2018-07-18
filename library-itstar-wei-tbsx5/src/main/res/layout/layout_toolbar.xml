@@ -2,22 +2,29 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="20dp"
+    android:layout_height="25dp"
     android:background="@android:color/black">
 
     <Button
         android:id="@+id/web_menu"
-        android:layout_width="18dp"
-        android:layout_height="18dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:background="@drawable/ic_menu"
         android:layout_marginEnd="10dp"
         android:layout_marginTop="0dp"
         android:layout_alignParentEnd="true"/>
 
+    <TextView
+        android:id="@+id/web_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textColor="@android:color/white"/>
+
     <ImageView
         android:id="@+id/web_close"
-        android:layout_width="18dp"
-        android:layout_height="18dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="0dp"
         android:visibility="gone"

@@ -3,6 +3,7 @@
     <string name="dialog_register_success">註冊成功！</string>
     <string name="dialog_plz_enter_account_password">請輸入帳號密碼！</string>
     <string name="dialog_plz_enter_check_code">驗證碼有誤！</string>
+    <string name="dialog_exit_full_screen">轻触返回键即可结束全屏模式</string>
     <string name="dialog_config_format_error">伺服器发生未知错误，请稍后再尝试。</string>
     <string name="dialog_check_password">請確認密碼是否正確，或者是新密碼是否相同。</string>
     <string name="dialog_please_check_your_wifi">请确认是否连线</string>

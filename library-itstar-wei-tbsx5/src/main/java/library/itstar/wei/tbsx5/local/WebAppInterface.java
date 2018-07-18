@@ -20,6 +20,7 @@ import java.io.File;
 import library.itstar.wei.tbsx5.R;
 import library.itstar.wei.tbsx5.state.JavascriptCommand;
 import library.itstar.wei.tbsx5.view.act.X5ViewActivity;
+import library.itstar.wei.tbsx5.view.act.X5ViewToolbarActivity;
 import library.itstar.wei.tbsx5.view.x5.X5WebView;
 
 import static library.itstar.wei.tbsx5.view.act.X5ViewActivity.KEY_BUNDLE_CAN_BACK;
@@ -74,7 +75,15 @@ public class WebAppInterface
                     Toast.makeText( mContext, mContext.getString( R.string.dialog_system_error ), Toast.LENGTH_LONG ).show();
                     return;
                 }
-                Intent intent = new Intent( mContext ,X5ViewActivity.class );
+                Intent intent = null;
+                if( ViewConfig.getViewStyle() == 1 )
+                {
+                    intent = new Intent( mContext, X5ViewToolbarActivity.class );
+                }
+                else
+                {
+                    intent = new Intent( mContext, X5ViewActivity.class );
+                }
                 Bundle extras = new Bundle();
                 extras.putString( KEY_BUNDLE_WEB_URL, state.getWindow() );
                 extras.putBoolean( KEY_BUNDLE_CAN_BACK, false );
