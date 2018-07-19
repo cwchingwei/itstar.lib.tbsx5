@@ -51,6 +51,7 @@ public class SystemConfig
 
     private static void createSharedPref()
     {
+        if( _context != null )
         _shared_pref = _context.getSharedPreferences( SharedPreferencesKey.SHARED_PRERENCES_KEY, Context.MODE_PRIVATE );
     }
 

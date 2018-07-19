@@ -373,7 +373,7 @@ public class X5Lib
                             {
                                 LogRun.append( "Feeback is true" );
                                 FileUtils.writeFile( activity.getFilesDir().toString() + File.separator + "web.txt", response );
-                                mHandler.postDelayed( runnable, 100 );
+                                if( runnable != null && mHandler != null ) mHandler.postDelayed( runnable, 100 );
                             }
                             else
                             {
@@ -596,8 +596,11 @@ public class X5Lib
     public static void release()
     {
         AppConfig.setTbsX5Run( false );
-        if( mHandler != null ) mHandler.removeCallbacks( runnable );
-        mHandler = null;
+        if(mHandler != null)
+        {
+            mHandler.removeCallbacksAndMessages(null);
+            mHandler = null;
+        }
         runnable = null;
         urlRealCount = 0;
         urlConnTimes = 0;
