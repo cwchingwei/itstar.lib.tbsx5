@@ -64,11 +64,19 @@ public class SystemConfig
 
     public String getSharedPreString( String aObject, String aDefault )
     {
-        if( _shared_pref  == null)
+        try
         {
-            createSharedPref();
+            if( _shared_pref  == null)
+            {
+                createSharedPref();
+            }
+            return  _shared_pref.getString( aObject, aDefault );
         }
-        return  _shared_pref.getString( aObject, aDefault );
+        catch ( Exception e )
+        {
+            return null;
+        }
+
     }
     public void putSharedPreFloat( String aObject, float aFloat )
     {
@@ -93,13 +101,20 @@ public class SystemConfig
         editor.commit();
     }
 
-    public Boolean getSharedPreBoolean( String aObject, boolean aDefault )
+    public boolean getSharedPreBoolean( String aObject, boolean aDefault )
     {
-        if( _shared_pref  == null)
+        try
         {
-            createSharedPref();
+            if( _shared_pref  == null)
+            {
+                createSharedPref();
+            }
+            return  _shared_pref.getBoolean( aObject, aDefault );
         }
-        return  _shared_pref.getBoolean( aObject, false );
+        catch ( Exception e )
+        {
+            return false;
+        }
     }
 
     public void reset()

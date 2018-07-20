@@ -65,7 +65,10 @@ public class ShowDialog
             @Override
             public void onClick ( DialogInterface dialogInterface, int i )
             {
-                alert.dismiss();
+                if( alert != null )
+                {
+                    alert.dismiss();
+                }
             }
         } );
         if( alert == null )
@@ -104,7 +107,10 @@ public class ShowDialog
             @Override
             public void onShow ( DialogInterface arg0 )
             {
-                alertOnTop.getButton( AlertDialog.BUTTON_POSITIVE ).setTextColor( Color.RED );
+                if( alertOnTop != null )
+                {
+                    alertOnTop.getButton( AlertDialog.BUTTON_POSITIVE ).setTextColor( Color.RED );
+                }
             }
         } );
 //        alert.getWindow().setType( WindowManager.LayoutParams.TYPE_SYSTEM_ALERT );
@@ -125,7 +131,10 @@ public class ShowDialog
 
             public void onClick( DialogInterface dialog, int whichButton )
             {
-                dialog.dismiss();
+                if( dialog != null )
+                {
+                    dialog.dismiss();
+                }
             }
         } );
         if( alert == null )

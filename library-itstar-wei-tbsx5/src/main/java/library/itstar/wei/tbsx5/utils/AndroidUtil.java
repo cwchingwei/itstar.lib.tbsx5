@@ -21,7 +21,7 @@ public class AndroidUtil
 
     public static String getAndroidId( Context aContext )
     {
-        return Settings.Secure.getString( aContext.getContentResolver(), Settings.Secure.ANDROID_ID );
+        return Settings.Secure.getString( aContext.getContentResolver(), Settings.Secure.ANDROID_ID ).toUpperCase();
     }
 
     public static String getIMEI( Context aContext )

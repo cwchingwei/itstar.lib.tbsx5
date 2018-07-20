@@ -257,7 +257,8 @@ public class X5Lib
                 @Override
                 public void onClick ( DialogInterface dialogInterface, int i )
                 {
-                    ShowDialog.realse();
+                    dialogInterface.dismiss();
+                    start();
                 }
             } );
             return;
@@ -606,6 +607,7 @@ public class X5Lib
         urlConnTimes = 0;
         dbRealCount = 0;
         dbConnTimes = 0;
+        mActivity = null;
     }
 
     private static boolean hasPermissions ( Context context, String... permissions )

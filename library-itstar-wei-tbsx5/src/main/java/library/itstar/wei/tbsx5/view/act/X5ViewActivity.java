@@ -328,6 +328,19 @@ public class X5ViewActivity extends AppCompatActivity
     private void initData()
     {
         _url = SystemConfig.instance().getSharedPreString( SharedPreferencesKey.SHARED_PRERENCES_KEY_WEB_URL, null );
+
+        if( _url == null )
+        {
+            runOnUiThread( new Runnable()
+            {
+                @Override
+                public void run ()
+                {
+                    if( mTextLunch != null ) mTextLunch.setText( getString( R.string.launch_system_error_text ) );
+                }
+            });
+            return;
+        }
         LogRun.append( "Now URL: " + _url );
 //        _url = "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file";
         historyOverrideURL = new ArrayList<>();
