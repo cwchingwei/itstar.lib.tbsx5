@@ -1,10 +1,12 @@
 package library.itstar.wei.tbsx5.local.log;
 
+import java.io.Serializable;
+
 /**
  * Created by Ching Wei on 2018/7/11.
  */
 
-public class LogBasicState
+public class LogBasicState implements Serializable
 {
     public String getDevice_id ()
     {
