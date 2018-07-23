@@ -24,7 +24,6 @@ import library.itstar.wei.tbsx5.model.IPAsyncTask;
 import library.itstar.wei.tbsx5.model.JSONModel;
 import library.itstar.wei.tbsx5.utils.AndroidUtil;
 import library.itstar.wei.tbsx5.utils.FastJsonUtils;
-import library.itstar.wei.tbsx5.utils.LogUtil;
 import library.itstar.wei.tbsx5.utils.NetWorkUtil;
 
 
@@ -121,18 +120,18 @@ public class LogAsyncTask
             if ( NetWorkUtil.getPublicIP() != null )
             {
                 sendAccount = NetWorkUtil.getPublicIP();
-                LogUtil.logError( LogUtil.TAG, "Public IP : " + NetWorkUtil.getPublicIP() );
+//                LogUtil.logError( LogUtil.TAG, "Public IP : " + NetWorkUtil.getPublicIP() );
             }
             else
             {
                 sendAccount = NetWorkUtil.getPhoneIPAddrs( 1 );
-                LogUtil.logError( LogUtil.TAG, "Phone IP : " + NetWorkUtil.getPhoneIPAddrs( 1 ) );
+//                LogUtil.logError( LogUtil.TAG, "Phone IP : " + NetWorkUtil.getPhoneIPAddrs( 1 ) );
             }
         }
         else
         {
             sendAccount = account;
-            LogUtil.logError( LogUtil.TAG, "account : " + account );
+//            LogUtil.logError( LogUtil.TAG, "account : " + account );
         }
     }
 
