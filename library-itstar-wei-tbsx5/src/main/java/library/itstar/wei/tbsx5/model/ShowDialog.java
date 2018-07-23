@@ -170,7 +170,18 @@ public class ShowDialog
     }
     public boolean isShowing()
     {
-        return alert != null? alert.isShowing() : false;
+        if( alert != null )
+        {
+            return alert != null? alert.isShowing() : false;
+        }
+        else if( alertOnTop != null )
+        {
+            return alertOnTop != null? alertOnTop.isShowing() : false;
+        }
+        else
+        {
+            return false;
+        }
     }
     public static void realse()
     {

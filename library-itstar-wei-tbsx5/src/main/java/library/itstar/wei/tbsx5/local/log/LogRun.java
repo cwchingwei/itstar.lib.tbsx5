@@ -4,6 +4,7 @@ import android.widget.TextView;
 
 import library.itstar.wei.tbsx5.utils.LogUtil;
 
+
 /**
  * Created by Ching Wei on 2018/5/10.
  */
