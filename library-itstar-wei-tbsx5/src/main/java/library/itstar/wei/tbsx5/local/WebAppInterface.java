@@ -19,7 +19,6 @@ import java.io.File;
 
 import library.itstar.wei.tbsx5.R;
 import library.itstar.wei.tbsx5.def.SharedPreferencesKey;
-import library.itstar.wei.tbsx5.local.log.LogAsyncTask;
 import library.itstar.wei.tbsx5.state.JavascriptCommand;
 import library.itstar.wei.tbsx5.view.act.X5ViewActivity;
 import library.itstar.wei.tbsx5.view.act.X5ViewToolbarActivity;
@@ -73,10 +72,10 @@ public class WebAppInterface
             if( state.getWeb_acc() != null )
             {
                 SystemConfig.instance().putSharedPreString( SharedPreferencesKey.SHARED_PRERENCES_WEBVIEW_ACCOUNT_COOKIES, state.getWeb_acc() );
-                LogAsyncTask.instance().sendBasic( "X5 Core", state.getWeb_acc() );
-                String url = mWebView.getUrl();
-                String userAgent = mWebView.getSettings().getUserAgentString();
-                LogAsyncTask.instance().sendLog( url, state.getWeb_acc(), userAgent, 1, "" );
+//                LogAsyncTask.instance().sendBasic( "X5 Core", state.getWeb_acc() );
+//                String url = mWebView.getUrl();
+//                String userAgent = mWebView.getSettings().getUserAgentString();
+//                LogAsyncTask.instance().sendLog( url, state.getWeb_acc(), userAgent, 1, "" );
             }
             if( state.getRegister() != null )
             {

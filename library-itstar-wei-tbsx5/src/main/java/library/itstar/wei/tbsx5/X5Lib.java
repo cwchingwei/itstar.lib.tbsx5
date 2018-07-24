@@ -32,7 +32,6 @@ import library.itstar.wei.tbsx5.local.AyncUpdateListener;
 import library.itstar.wei.tbsx5.local.CallBackListener;
 import library.itstar.wei.tbsx5.local.SystemConfig;
 import library.itstar.wei.tbsx5.local.ViewConfig;
-import library.itstar.wei.tbsx5.local.log.LogAsyncTask;
 import library.itstar.wei.tbsx5.local.log.LogRun;
 import library.itstar.wei.tbsx5.model.CheckLinkModel;
 import library.itstar.wei.tbsx5.model.ConfigAsyncTimeoutTask;
@@ -209,7 +208,7 @@ public class X5Lib
 
         SystemConfig.setNowActivity( activity );
         SystemConfig.construct( mActivity );
-        LogAsyncTask.construct( mActivity );
+//        LogAsyncTask.construct( mActivity );
         SystemConfig.instance().resetWebURL();
     }
 
@@ -232,7 +231,7 @@ public class X5Lib
             } );
         }
         checkTbsX5();
-        LogAsyncTask.instance().sendBasic( browserCore, null );
+//        LogAsyncTask.instance().sendBasic( browserCore, null );
     }
     public static void start ()
     {

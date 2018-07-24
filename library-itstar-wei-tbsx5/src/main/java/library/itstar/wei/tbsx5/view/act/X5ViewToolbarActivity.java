@@ -48,7 +48,6 @@ import library.itstar.wei.tbsx5.def.SharedPreferencesKey;
 import library.itstar.wei.tbsx5.local.AppConfig;
 import library.itstar.wei.tbsx5.local.SystemConfig;
 import library.itstar.wei.tbsx5.local.WebAppInterface;
-import library.itstar.wei.tbsx5.local.log.LogAsyncTask;
 import library.itstar.wei.tbsx5.local.log.LogRun;
 import library.itstar.wei.tbsx5.model.CheckLinkModel;
 import library.itstar.wei.tbsx5.model.CheckWebURL;
@@ -165,7 +164,7 @@ public class X5ViewToolbarActivity extends AppCompatActivity
         initListener();
         initData();
 
-        LogAsyncTask.instance().sendLog( _url, null, webView.getSettings().getUserAgentString(), 0, "" );
+//        LogAsyncTask.instance().sendLog( _url, null, webView.getSettings().getUserAgentString(), 0, "" );
         if( webView.getX5WebViewExtension() != null )
         {
             webView.loadUrl( _url, null );
