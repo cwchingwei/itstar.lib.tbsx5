@@ -314,6 +314,7 @@ public class X5Lib
                 public void onClick ( DialogInterface dialogInterface, int i )
                 {
                     dialogInterface.dismiss();
+                    ShowDialog.realse();
                     start();
                 }
             } );

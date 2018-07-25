@@ -68,6 +68,7 @@ public class ShowDialog
                 if( alert != null )
                 {
                     alert.dismiss();
+                    alert=null;
                 }
             }
         } );
