@@ -65,29 +65,22 @@ public class ShowDialog
             @Override
             public void onClick ( DialogInterface dialogInterface, int i )
             {
-                if( alert != null )
-                {
-                    alert.dismiss();
-                    alert=null;
-                }
+                dialogInterface.dismiss();
             }
         } );
-        if( alert == null )
-        {
-            alert = builder.create();
-        }
-        alert.setOnShowListener( new DialogInterface.OnShowListener()
+        final AlertDialog alert1 = builder.create();
+        alert1.setOnShowListener( new DialogInterface.OnShowListener()
         {
             @Override
             public void onShow ( DialogInterface arg0 )
             {
-                alert.getButton( AlertDialog.BUTTON_POSITIVE ).setTextColor( Color.RED );
+                alert1.getButton( AlertDialog.BUTTON_POSITIVE ).setTextColor( Color.RED );
             }
         } );
 
-        if( !alert.isShowing() )
+        if( !alert1.isShowing() )
         {
-            alert.show();
+            alert1.show();
         }
     }
 

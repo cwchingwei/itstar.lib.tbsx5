@@ -308,6 +308,7 @@ public class X5Lib
 
         if ( !NetWorkUtil.checkInternetConnection( activity ) )
         {
+            LogUtil.logInfo( LogUtil.TAG, "NO NETWORK" );
             ShowDialog.instance().showButtonRestartMessageDialog( activity, activity.getString( R.string.dialog_please_check_your_wifi ), activity.getString( R.string.dialog_title_error ), new DialogInterface.OnClickListener()
             {
                 @Override
@@ -317,7 +318,7 @@ public class X5Lib
                     ShowDialog.realse();
                     start();
                 }
-            } );
+            });
             return;
         }
 
@@ -629,7 +630,7 @@ public class X5Lib
                                         if ( urlRealCount == urlConnTimes )
                                         {
                                             String tmpUrl1 = SystemConfig.instance().getSharedPreString( SharedPreferencesKey.SHARED_PRERENCES_KEY_WEB_URL, null );
-                                            if( tmpUrl1 == null ) mHandler.postDelayed( runnable, 8000 );
+                                            if( tmpUrl1 == null ) mHandler.postDelayed( runnable, 500 );
                                         }
                                     }
                                 }
