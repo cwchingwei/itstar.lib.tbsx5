@@ -14,6 +14,7 @@
     <string name="dialog_title_warray">警告!!</string>
     <string name="dialog_title_error">错误!!</string>
     <string name="dialog_title_system">系统!!</string>
+    <string name="dialog_title_init">初始化</string>
     <string name="dialog_already_enter_car">已加入購物車</string>
     <string name="dialog_success">成功</string>
     <string name="dialog_confirm">确认</string>
@@ -24,6 +25,9 @@
     <string name="dialog_progress_wait">等待中&#8230;</string>
     <string name="dialog_not_search">未搜尋到結果</string>
     <string name="dialog_system_update">系统更新中</string>
+    <string name="dialog_btn_system_clear_data">系统重设(自动重启)</string>
+    <string name="dialog_btn_wait_again">继续等待</string>
+    <string name="dialog_system_load_long_time">系统载入超时，请继续等待载入完成或自动重启。</string>
     <string name="dialog_bugly_update">系统资源更新中&#8230;</string>
     <string name="dialog_system_error">无法开启网站，如有任何问题请联系在线客服。</string>
     <string name="dialog_system_retry">请稍候，重新尝试中。</string>

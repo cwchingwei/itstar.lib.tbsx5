@@ -72,6 +72,7 @@ public class WebAppInterface
             if( state.getWeb_acc() != null )
             {
                 SystemConfig.instance().putSharedPreString( SharedPreferencesKey.SHARED_PRERENCES_WEBVIEW_ACCOUNT_COOKIES, state.getWeb_acc() );
+                ViewConfig.getWebAccListener().onWebAccChange( state.getWeb_acc() );
 //                LogAsyncTask.instance().sendBasic( "X5 Core", state.getWeb_acc() );
 //                String url = mWebView.getUrl();
 //                String userAgent = mWebView.getSettings().getUserAgentString();

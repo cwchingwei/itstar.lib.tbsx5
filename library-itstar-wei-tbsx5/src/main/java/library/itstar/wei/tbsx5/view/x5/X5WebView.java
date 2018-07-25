@@ -29,6 +29,7 @@ public class X5WebView extends WebView
         super( arg0, arg1 );
         initWebViewSettings();
         this.getView().setClickable( true );
+        setWebContentsDebuggingEnabled( true );
     }
 
     private void initWebViewSettings ()

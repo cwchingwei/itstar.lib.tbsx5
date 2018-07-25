@@ -90,6 +90,34 @@ public class ShowDialog
         }
     }
 
+    public void showClearDataMessageDialog( Context aContext, String aMessage, String aTitle, OnClickListener listenerPos, OnClickListener listenerNeg )
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder( aContext );
+        builder.setCancelable( false );
+        builder.setTitle( aTitle );
+        builder.setMessage( aMessage );
+//        builder.setIcon( android.R.drawable.ic_dialog_alert );
+        builder.setPositiveButton( aContext.getString( R.string.dialog_btn_system_clear_data ), listenerPos );
+        builder.setNegativeButton( aContext.getString( R.string.dialog_btn_wait_again ), listenerNeg );
+        if( alert == null )
+        {
+            alert = builder.create();
+        }
+        alert.setOnShowListener( new DialogInterface.OnShowListener()
+        {
+            @Override
+            public void onShow ( DialogInterface arg0 )
+            {
+                alert.getButton( AlertDialog.BUTTON_POSITIVE ).setTextColor( Color.RED );
+            }
+        });
+
+        if( !alert.isShowing() )
+        {
+            alert.show();
+        }
+    }
+
     public void showBuglyRestartMessageDialog( Context aContext, OnClickListener listener )
     {
         AlertDialog.Builder builder = new AlertDialog.Builder( aContext, AlertDialog.THEME_HOLO_LIGHT );

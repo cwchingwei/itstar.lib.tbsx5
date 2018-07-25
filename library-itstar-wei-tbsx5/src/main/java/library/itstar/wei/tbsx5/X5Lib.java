@@ -1,6 +1,8 @@
 package library.itstar.wei.tbsx5;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -59,7 +61,9 @@ public class X5Lib
     private static SpinKitView        mSpinKitView        = null;
     private static PingFinishListener mPingFinishListener = null;
     private static boolean            mStopHandler    = false;
+    private static boolean            mX5Downloading    = false;
     private static android.os.Handler mHandler        = new android.os.Handler();
+    private static android.os.Handler mAppLaunchHandler        = new android.os.Handler();
     private static int mCount = 0;
     private static int urlConnTimes = 0;
     private static int urlRealCount = 0;
@@ -72,6 +76,7 @@ public class X5Lib
         RUNNING,FINISH,NO_USE
     }
 
+    private static Runnable appLaunchRunable = null;
     private static Runnable runnable = new Runnable()
     {
         @Override
@@ -118,12 +123,14 @@ public class X5Lib
             public void onViewInitFinished(boolean arg0) {
                 // TODO Auto-generated method stub
                 //x5內核初始化完成的回调，为true表示x5内核加载成功，否则表示x5内核加载失败，会自动切换到系统内核。
-//                if( !arg0 ) AppConfig.setBuglyRun( true );
+//                LogUtil.logInfo( LogUtil.TAG, "onViewInitFinished: " + arg0);
+                if( !arg0 ) AppConfig.setTbsX5Run( true );
             }
 
             @Override
             public void onCoreInitFinished() {
                 // TODO Auto-generated method stub
+//                LogUtil.logInfo( LogUtil.TAG, "onCoreInitFinished" );
             }
         };
 
@@ -133,7 +140,7 @@ public class X5Lib
         if ( !QbSdk.isTbsCoreInited() )
         {
 //            AppConfig.setBuglyRun( true );
-            QbSdk.preInit( context, null );// 设置X5初始化完成的回调接口
+            QbSdk.preInit( context, cb );// 设置X5初始化完成的回调接口
         }
 
         QbSdk.setTbsListener( new TbsListener()
@@ -185,7 +192,7 @@ public class X5Lib
                         mLaunchLoading.setText( String.format( mActivity.getString( R.string.launch_browser_x5_text ) + "%s %%", percent ) );
                     }
                 } );
-
+                mX5Downloading = true;
                 AppConfig.setTbsX5Run( true );
             }
         });
@@ -195,6 +202,7 @@ public class X5Lib
     {
         ViewConfig.setViewStyle( styleToolbar );
     }
+
     public static void init ( final Activity activity, String appVersion, String appApp, String isDev )
     {
         LogUtil.logInfo( LogUtil.TAG, "X5Lib init" );
@@ -237,6 +245,51 @@ public class X5Lib
     {
         checkTbsX5();
         construct( mActivity );
+        appLaunchRunable = new Runnable()
+        {
+            @Override
+            public void run ()
+            {
+                if( AppConfig.isTbsX5Run() && !mX5Downloading )
+                {
+                    mActivity.runOnUiThread( new Runnable()
+                    {
+                        @Override
+                        public void run ()
+                        {
+                            ShowDialog.instance().showClearDataMessageDialog( mActivity, mActivity.getString( R.string.dialog_system_load_long_time ), mActivity.getString( R.string.dialog_title_init ), new DialogInterface.OnClickListener()
+                                    {
+                                        @Override
+                                        public void onClick ( DialogInterface dialogInterface, int i )
+                                        {
+                                            clearApplicationData( mActivity );
+                                            doRestart( mActivity );
+                                        }
+                                    },
+                                    new DialogInterface.OnClickListener()
+                                    {
+                                        @Override
+                                        public void onClick ( DialogInterface dialogInterface, int i )
+                                        {
+                                            mAppLaunchHandler.postDelayed( appLaunchRunable, 30000 );
+                                        }
+                                    }
+                            );
+                        }
+                    } );
+                }
+                else
+                {
+                    mAppLaunchHandler.postDelayed( appLaunchRunable, 10000 );
+                }
+            }
+        };
+        mAppLaunchHandler.postDelayed( appLaunchRunable, 10000 );
+    }
+
+    public static void addOnWebAccChange( ViewConfig.WebAccListener listener )
+    {
+        ViewConfig.setWebAccListener( listener );
     }
 
     private static void construct( final Activity activity )
@@ -622,6 +675,11 @@ public class X5Lib
             mHandler.removeCallbacksAndMessages(null);
             mHandler = null;
         }
+        if(mAppLaunchHandler != null)
+        {
+            mAppLaunchHandler.removeCallbacksAndMessages(null);
+            mAppLaunchHandler = null;
+        }
         runnable = null;
         urlRealCount = 0;
         urlConnTimes = 0;
@@ -661,6 +719,71 @@ public class X5Lib
 
         System.out.println( "value: " + value );
         return value;
+    }
+
+    private static void clearApplicationData( Context context) {
+        File cache  = context.getCacheDir();
+        File appDir = new File(cache.getParent());
+        if(appDir.exists()){
+            String[] children = appDir.list();
+            for(String s : children){
+                if(!s.equals("lib")){
+                    deleteDir(new File(appDir, s));
+                }
+            }
+        }
+    }
+
+    public static boolean deleteDir(File dir) {
+        if (dir != null && dir.isDirectory()) {
+            String[] children = dir.list();
+            for (int i = 0; i < children.length; i++) {
+                boolean success = deleteDir(new File(dir, children[i]));
+                if (!success) {
+                    return false;
+                }
+            }
+        }
+        return dir.delete();
+    }
+
+    public static void doRestart(Context c) {
+        try {
+            //check if the context is given
+            if (c != null) {
+                //fetch the packagemanager so we can get the default launch activity
+                // (you can replace this intent with any other activity if you want
+                PackageManager pm = c.getPackageManager();
+                //check if we got the PackageManager
+                if (pm != null) {
+                    //create the intent with the default start activity for your application
+                    Intent mStartActivity = pm.getLaunchIntentForPackage(
+                            c.getPackageName()
+                    );
+                    if (mStartActivity != null) {
+                        mStartActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        //create a pending intent so the application is restarted after System.exit(0) was called.
+                        // We use an AlarmManager to call this intent in 100ms
+                        int mPendingIntentId = 6665582;
+                        PendingIntent mPendingIntent = PendingIntent
+                                .getActivity(c, mPendingIntentId, mStartActivity,
+                                        PendingIntent.FLAG_CANCEL_CURRENT);
+                        AlarmManager mgr = (AlarmManager) c.getSystemService(Context.ALARM_SERVICE);
+                        mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
+                        //kill the application
+                        System.exit(0);
+                    } else {
+                        LogUtil.logInfo( LogUtil.TAG, "Was not able to restart application, mStartActivity null");
+                    }
+                } else {
+                    LogUtil.logInfo( LogUtil.TAG, "Was not able to restart application, PM null");
+                }
+            } else {
+                LogUtil.logInfo( LogUtil.TAG, "Was not able to restart application, Context null");
+            }
+        } catch (Exception ex) {
+            LogUtil.logInfo( LogUtil.TAG, "Was not able to restart application");
+        }
     }
 
     public interface PingFinishListener
