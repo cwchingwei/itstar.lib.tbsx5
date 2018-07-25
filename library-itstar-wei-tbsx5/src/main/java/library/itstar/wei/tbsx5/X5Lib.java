@@ -340,10 +340,6 @@ public class X5Lib
         if( JSONModel.instance().isJSONValid( resString ) )
         {
             JSONModel.instance().setJSONObject( resString );
-            if( JSONModel.instance().getDomainUrl(AppConfig.getIsDev().contains( "1" )) == null )
-            {
-                JSONModel.instance().setJSONObject( load(activity,"defaultAppInfo") );
-            }
         }
         else
         {
