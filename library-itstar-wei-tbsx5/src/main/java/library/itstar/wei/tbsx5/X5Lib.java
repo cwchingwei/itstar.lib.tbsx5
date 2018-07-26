@@ -156,6 +156,8 @@ public class X5Lib
                         mLaunchLoading.setText( String.format( mActivity.getString( R.string.launch_browser_x5_text ) + "%s %%", 100 ) );
                     }
                 } );
+                mX5Downloading = true;
+                AppConfig.setTbsX5Run( true );
             }
 
             @Override
@@ -642,20 +644,27 @@ public class X5Lib
 
     public static void checkTbsX5()
     {
-        X5WebView webView = new X5WebView( mActivity );
-        if( webView.getX5WebViewExtension() == null )
+        try
         {
-            LogUtil.logInfo( LogUtil.TAG, "X5 Web View init Fail" );
-            browserCore = "Android Core";
-            AppConfig.setTbsX5Run( true );
+            X5WebView webView = new X5WebView( mActivity );
+            if( webView.getX5WebViewExtension() == null )
+            {
+                LogUtil.logInfo( LogUtil.TAG, "X5 Web View init Fail" );
+                browserCore = "Android Core";
+                AppConfig.setTbsX5Run( true );
+            }
+            else
+            {
+                LogUtil.logInfo( LogUtil.TAG, "X5 Web View init Success" );
+                browserCore = "X5 Core";
+                AppConfig.setTbsX5Run( false );
+            }
+            webView.destroy();
         }
-        else
+        catch ( Exception e )
         {
-            LogUtil.logInfo( LogUtil.TAG, "X5 Web View init Success" );
-            browserCore = "X5 Core";
-            AppConfig.setTbsX5Run( false );
+
         }
-        webView.destroy();
     }
 
     public static void releaseView ()
