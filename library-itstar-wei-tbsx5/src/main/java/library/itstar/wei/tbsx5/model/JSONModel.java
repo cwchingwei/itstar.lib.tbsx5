@@ -8,7 +8,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import library.itstar.wei.tbsx5.def.WebServiceSet;
 import library.itstar.wei.tbsx5.utils.StringUtils;
 
 
@@ -17,10 +16,10 @@ import library.itstar.wei.tbsx5.utils.StringUtils;
  */
 public class JSONModel
 {
-    public static JSONModel instance()
+    public static JSONModel instance ()
     {
 
-        if( _instance == null )
+        if ( _instance == null )
         {
             _instance = new JSONModel();
         }
@@ -28,7 +27,7 @@ public class JSONModel
         return _instance;
     }
 
-    public void setJSONObject( String aJSONString )
+    public void setJSONObject ( String aJSONString )
     {
         try
         {
@@ -66,7 +65,7 @@ public class JSONModel
     {
         try
         {
-            StringUtils.containFooBar(new JSONObject( test ).getString( "check_link" ) );
+            StringUtils.containFooBar( new JSONObject( test ).getString( "check_link" ) );
         }
         catch ( JSONException ex )
         {
@@ -75,16 +74,16 @@ public class JSONModel
         return true;
     }
 
-    public JSONObject getJSONObject()
+    public JSONObject getJSONObject ()
     {
         return _JSONObject;
     }
 
-    public Boolean getFeebackUpdate()
+    public Boolean getFeebackUpdate ()
     {
         try
         {
-            if( _JSONObject.getInt( "feedback" ) == 1 )
+            if ( _JSONObject.getInt( "feedback" ) == 1 )
             {
                 return true;
             }
@@ -99,7 +98,8 @@ public class JSONModel
             return false;
         }
     }
-    public String getWebUrl()
+
+    public String getWebUrl ()
     {
         try
         {
@@ -112,26 +112,11 @@ public class JSONModel
         }
     }
 
-    public ArrayList<String> getNewWebUrl()
+    public ArrayList< String > getNewWebUrl ()
     {
         try
         {
-            return new ArrayList<> (Arrays.asList(_JSONObject.getString( "web_url" ).split( "," )));
-        }
-        catch ( Exception e )
-        {
-            e.printStackTrace();
-            return null;
-        }
-    }
-    public ArrayList<String> getDomainUrl( boolean isDev )
-    {
-        try
-        {
-            if( isDev )
-                return new ArrayList<> (Arrays.asList( WebServiceSet.APP_LOCAL_SERVICE_DEV.split( "," )));
-            else
-                return new ArrayList<> (Arrays.asList(_JSONObject.getString( "domain_url" ).split( "," )));
+            return new ArrayList<>( Arrays.asList( _JSONObject.getString( "web_url" ).split( "," ) ) );
         }
         catch ( Exception e )
         {
@@ -140,7 +125,20 @@ public class JSONModel
         }
     }
 
-    public String getAppUpDateUrl()
+    public ArrayList< String > getDomainUrl ( boolean isDev )
+    {
+        try
+        {
+            return new ArrayList<>( Arrays.asList( _JSONObject.getString( "domain_url" ).split( "," ) ) );
+        }
+        catch ( Exception e )
+        {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public String getAppUpDateUrl ()
     {
         try
         {
@@ -154,7 +152,7 @@ public class JSONModel
         }
     }
 
-    public void release()
+    public void release ()
     {
         _instance = null;
         _JSONObject = null;
