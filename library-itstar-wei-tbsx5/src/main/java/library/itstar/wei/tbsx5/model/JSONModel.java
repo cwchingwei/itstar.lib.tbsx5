@@ -99,6 +99,26 @@ public class JSONModel
         }
     }
 
+    public String getSessionId ()
+    {
+        try
+        {
+            if( _JSONObject.has( "sess_id" ) )
+            {
+                return _JSONObject.getString( "sess_id" );
+            }
+            else
+            {
+                return null;
+            }
+        }
+        catch ( Exception e )
+        {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public String getWebUrl ()
     {
         try

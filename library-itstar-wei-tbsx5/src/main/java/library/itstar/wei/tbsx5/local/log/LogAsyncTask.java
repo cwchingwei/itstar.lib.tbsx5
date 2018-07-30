@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.concurrent.Executors;
 
 import library.itstar.wei.tbsx5.def.SharedPreferencesKey;
+import library.itstar.wei.tbsx5.def.WebServiceSet;
 import library.itstar.wei.tbsx5.local.AppConfig;
 import library.itstar.wei.tbsx5.local.SystemConfig;
 import library.itstar.wei.tbsx5.model.IPAsyncTask;
@@ -50,6 +51,15 @@ public class LogAsyncTask
             _instance = new LogAsyncTask();
         }
         return _instance;
+    }
+
+    public void judgeFeeback( String requestDomain, String sessionId )
+    {
+        HashMap<String, String> map = new HashMap<>();
+        map.put( "sess_id", sessionId );
+
+        HttpAsync async = new HttpAsync( map );
+        async.executeOnExecutor( Executors.newCachedThreadPool(), requestDomain + WebServiceSet.APP_LOCAL_FEEBACK_REDIRE );
     }
 
     public void sendLog( String requestURL, String account, String userAgent, int status, String response )

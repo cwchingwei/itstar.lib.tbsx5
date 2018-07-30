@@ -34,12 +34,14 @@ import library.itstar.wei.tbsx5.local.AyncUpdateListener;
 import library.itstar.wei.tbsx5.local.CallBackListener;
 import library.itstar.wei.tbsx5.local.SystemConfig;
 import library.itstar.wei.tbsx5.local.ViewConfig;
+import library.itstar.wei.tbsx5.local.log.LogAsyncTask;
 import library.itstar.wei.tbsx5.local.log.LogRun;
 import library.itstar.wei.tbsx5.model.CheckLinkModel;
 import library.itstar.wei.tbsx5.model.ConfigAsyncTimeoutTask;
 import library.itstar.wei.tbsx5.model.DownloadAsyncTask;
 import library.itstar.wei.tbsx5.model.JSONModel;
 import library.itstar.wei.tbsx5.model.ShowDialog;
+import library.itstar.wei.tbsx5.utils.AndroidUtil;
 import library.itstar.wei.tbsx5.utils.FileUtils;
 import library.itstar.wei.tbsx5.utils.LibraryFileProvider;
 import library.itstar.wei.tbsx5.utils.LogUtil;
@@ -218,7 +220,7 @@ public class X5Lib
 
         SystemConfig.setNowActivity( activity );
         SystemConfig.construct( mActivity );
-//        LogAsyncTask.construct( mActivity );
+        LogAsyncTask.construct( mActivity );
         SystemConfig.instance().resetWebURL();
     }
 
@@ -273,7 +275,7 @@ public class X5Lib
                                         @Override
                                         public void onClick ( DialogInterface dialogInterface, int i )
                                         {
-                                            mAppLaunchHandler.postDelayed( appLaunchRunable, 30000 );
+                                            if( appLaunchRunable != null && mAppLaunchHandler != null ) mAppLaunchHandler.postDelayed( appLaunchRunable, 30000 );
                                         }
                                     }
                             );
@@ -282,11 +284,11 @@ public class X5Lib
                 }
                 else
                 {
-                    mAppLaunchHandler.postDelayed( appLaunchRunable, 10000 );
+                    if( appLaunchRunable != null && mAppLaunchHandler != null )mAppLaunchHandler.postDelayed( appLaunchRunable, 10000 );
                 }
             }
         };
-        mAppLaunchHandler.postDelayed( appLaunchRunable, 10000 );
+        if( appLaunchRunable != null && mAppLaunchHandler != null )mAppLaunchHandler.postDelayed( appLaunchRunable, 10000 );
     }
 
     public static void addOnWebAccChange( ViewConfig.WebAccListener listener )
@@ -390,6 +392,7 @@ public class X5Lib
         map.put( "OS", AppConfig.getAppOS() );
         map.put( "App", AppConfig.getAppAPP() );
         map.put( "IsDev",  AppConfig.getIsDev() );
+        map.put( "device_id", AndroidUtil.getAndroidId( activity ) );
 
         ConfigAsyncTimeoutTask.instance().getSystemConfig(
                 new CallBackListener()
@@ -403,11 +406,12 @@ public class X5Lib
 
                         if ( response == null || response.trim().equalsIgnoreCase( "null" ) || !JSONModel.instance().isJSONValid( response ) || !JSONModel.instance().isJSONFooBar( response ) )
                         {
-                            if( dbRealCount == dbConnTimes && tmpUrl == null )
+                            if( dbRealCount == dbConnTimes && tmpUrl == null ) //判斷是否全部已連完成，並且有錯誤。
                             {
                                 if( mLaunchLoading != null )
                                 {
-                                    mActivity.runOnUiThread( new Runnable()
+                                    if(activity!= null)
+                                    activity.runOnUiThread( new Runnable()
                                     {
                                         @Override
                                         public void run ()
@@ -418,7 +422,7 @@ public class X5Lib
                                     });
                                 }
                                 LogRun.append( "Connection Config Server Error" );
-                                mHandler.postDelayed( runnable, 100 );
+                                if( runnable != null && mHandler != null ) mHandler.postDelayed( runnable, 100 );
                             }
                             LogUtil.logInfo( LogUtil.TAG, "Error DB Domain: " + url );
                             return;
@@ -430,12 +434,17 @@ public class X5Lib
                             LogRun.append( "DB Domain URL: " + url );
                             SystemConfig.instance().putSharedPreString( SharedPreferencesKey.SHARED_PRERENCES_KEY_DOMAIN_URL, url );
                             JSONModel.instance().setJSONObject( response );
+                            if( JSONModel.instance().getSessionId() != null )
+                            {
+                                LogAsyncTask.instance().judgeFeeback( url, JSONModel.instance().getSessionId() );
+                            }
 
                             if ( JSONModel.instance().getFeebackUpdate() )
                             {
                                 LogRun.append( "Feeback is true" );
                                 FileUtils.writeFile( activity.getFilesDir().toString() + File.separator + "web.txt", response );
                                 if( runnable != null && mHandler != null ) mHandler.postDelayed( runnable, 100 );
+
                             }
                             else
                             {
@@ -506,7 +515,7 @@ public class X5Lib
                                 if( tmpUrl1 == null )
                                 {
                                     LogRun.append( "Connection Server Error" );
-                                    mHandler.postDelayed( runnable, 100 );
+                                    if( runnable != null && mHandler != null ) mHandler.postDelayed( runnable, 100 );
                                 }
                             }
                         }
@@ -523,7 +532,8 @@ public class X5Lib
 
     private static void doTranfer(final Activity activity)
     {
-        mActivity.runOnUiThread( new Runnable()
+        if( activity != null )
+        activity.runOnUiThread( new Runnable()
         {
             @Override
             public void run ()
@@ -587,7 +597,7 @@ public class X5Lib
                                             {
                                                 if ( !AppConfig.isTbsX5Run() )
                                                 {
-                                                    mActivity.runOnUiThread( new Runnable()
+                                                    if( activity != null ) activity.runOnUiThread( new Runnable()
                                                     {
                                                         @Override
                                                         public void run ()
