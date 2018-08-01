@@ -291,11 +291,13 @@ public class StringUtils
             String hostURL = new URL(url).getHost();
             if( url.contains( "https://" ) )
             {
-                reURL = "https://" + hostURL + "/main/CheckLink/";
+//                reURL = "https://" + hostURL + "/main/CheckLink/";
+                reURL = "https://" + hostURL + "/check_link/";
             }
             else
             {
-                reURL = "http://" + hostURL + "/main/CheckLink/";
+//                reURL = "http://" + hostURL + "/main/CheckLink/";
+                reURL = "http://" + hostURL + "/check_link/";
             }
         }
         catch ( MalformedURLException e )
